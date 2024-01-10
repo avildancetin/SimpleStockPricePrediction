@@ -50,18 +50,13 @@ y_pred = model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
 
-# Predict the next day's adjusted closing price for a specific future date
 future_date = pd.to_datetime('2024-01-10')
-
-# Extract features for the future date
-# Use the logic you applied for calculating features during preprocessing
 future_features = pd.DataFrame({
     'Daily_Return': [stock_data['Adj Close'].pct_change().iloc[-1]],
     'Moving_Avg_5': [stock_data['Adj Close'].rolling(window=5).mean().iloc[-1]],
     'Moving_Avg_10': [stock_data['Adj Close'].rolling(window=10).mean().iloc[-1]]
 })
 
-# Predict the next day's adjusted closing price for the future date
 future_close = model.predict(future_features.values.reshape(1, -1))
 print(f'Predicted Close Price on {future_date}: {future_close[0]}')
 
